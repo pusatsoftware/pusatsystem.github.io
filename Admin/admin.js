@@ -1,81 +1,55 @@
 const userTableBody = document.getElementById('userTableBody');
 const annTarget = document.getElementById('annTarget');
-const annList = document.getElementById('announcementList');
 let currentEditId = "";
 
-// 1. KULLANICI VE DUYURU HEDEF LİSTESİNİ YÜKLE
-function loadDashboard() {
+// DASHBOARD BAŞLATICI (Kullanıcılar ve Duyuru Hedefleri)
+function initDashboard() {
     db.collection("users").orderBy("createdAt", "desc").onSnapshot(snapshot => {
         userTableBody.innerHTML = "";
-        // Select box'ı sıfırla ama "Tüm Kullanıcılar" kalsın
         annTarget.innerHTML = '<option value="all">Tüm Kullanıcılara</option>';
 
         snapshot.forEach(doc => {
             const user = doc.data();
             const uid = doc.id;
 
-            // Tabloya Ekle
+            // Tabloyu Doldur (Hizalı)
             userTableBody.innerHTML += `
                 <tr>
                     <td><b>${user.name}</b></td>
-                    <td>${user.email}<br><small style="color:red">${user.password}</small></td>
-                    <td><small>${user.createdAt}</small></td>
+                    <td>${user.email}<br><small style="color:#ff7675">${user.password}</small></td>
                     <td>
-                        <button onclick="openEditModal('${uid}','${user.name}','${user.email}','${user.password}')" class="btn-sm edit">Düzenle</button>
-                        <button onclick="deleteUser('${uid}')" class="btn-sm delete">Sil</button>
+                        <button class="btn btn-sm btn-primary" onclick="openEditModal('${uid}','${user.name}','${user.email}','${user.password}')">✏️</button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteUser('${uid}')">🗑️</button>
                     </td>
                 </tr>`;
 
-            // Duyuru Hedef Listesine (Select Box) Ekle
-            annTarget.innerHTML += `<option value="${uid}">${user.name}</option>`;
+            // Duyuru Seçeneğine Ekle
+            annTarget.innerHTML += `<option value="${user.email}">${user.name}</option>`;
         });
     });
 }
 
-// 2. DUYURU GÖNDERME
+// DUYURU GÖNDER
 function sendAnnouncement() {
     const title = document.getElementById('annTitle').value;
     const content = document.getElementById('annContent').value;
     const target = annTarget.value;
 
-    if(!title || !content) return alert("Alanları doldur!");
+    if(!title || !content) return alert("Boş alan bırakmayın!");
 
     db.collection("announcements").add({
-        title,
-        message: content,
-        target,
+        title, message: content, target,
         createdAt: new Date().toLocaleString('tr-TR')
     }).then(() => {
-        alert("Duyuru Gönderildi!");
+        alert("Duyuru Yayında!");
         document.getElementById('annTitle').value = "";
         document.getElementById('annContent').value = "";
     });
 }
 
-// 3. AKTİF DUYURULARI LİSTELE VE SİL
-function loadAnnouncements() {
-    db.collection("announcements").orderBy("createdAt", "desc").onSnapshot(snapshot => {
-        annList.innerHTML = "";
-        snapshot.forEach(doc => {
-            const data = doc.data();
-            annList.innerHTML += `
-                <div class="ann-card">
-                    <strong>${data.title}</strong>
-                    <p>${data.message}</p>
-                    <small>${data.target === 'all' ? 'Herkes' : 'Özel Mesaj'}</small>
-                    <button onclick="deleteAnn('${doc.id}')" class="btn-del-ann">×</button>
-                </div>`;
-        });
-    });
-}
-
-function deleteAnn(id) {
-    if(confirm("Duyuru silinsin mi?")) db.collection("announcements").doc(id).delete();
-}
-
-// Düzenleme, Silme ve Modal fonksiyonları (Önceki kodlarla aynı şekilde buraya dahil edilecek)
+// SİLME & DÜZENLEME (Entegre)
 function deleteUser(id) {
-    if(confirm("Kullanıcı silinsin mi?")) db.collection("users").doc(id).delete();
+    if(confirm("Silinsin mi?")) db.collection("users").doc(id).delete();
 }
 
 function openEditModal(id, n, e, p) {
@@ -93,13 +67,12 @@ function updateUser() {
         name: document.getElementById('editName').value,
         email: document.getElementById('editEmail').value,
         password: document.getElementById('editPassword').value
-    }).then(() => { alert("Güncellendi!"); closeModal(); });
+    }).then(() => { closeModal(); alert("Güncellendi!"); });
 }
 
-// Başlat
-loadDashboard();
-loadAnnouncements();
+initDashboard();
 
 document.getElementById('logout').addEventListener('click', () => {
-    auth.signOut().then(() => window.location.href="../Login/login.html");
+    localStorage.removeItem("isLoggedIn");
+    window.location.href="../Login/login.html";
 });
