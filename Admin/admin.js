@@ -1,78 +1,72 @@
-const userTableBody = document.getElementById('userTableBody');
+const userListContainer = document.getElementById('userListContainer');
 const annTarget = document.getElementById('annTarget');
 let currentEditId = "";
 
-// DASHBOARD BAŞLATICI (Kullanıcılar ve Duyuru Hedefleri)
-function initDashboard() {
+function initAdmin() {
+    // KULLANICI LİSTESİ VE TABLO HİZALAMA
     db.collection("users").orderBy("createdAt", "desc").onSnapshot(snapshot => {
-        userTableBody.innerHTML = "";
-        annTarget.innerHTML = '<option value="all">Tüm Kullanıcılara</option>';
+        userListContainer.innerHTML = `
+            <div class="table-header">
+                <span>#</span><span>İSİM</span><span>E-POSTA</span><span>ŞİFRE</span><span>EYLEM</span>
+            </div>
+        `;
+        annTarget.innerHTML = '<option value="all">🚀 Herkese Gönder</option>';
 
-        snapshot.forEach(doc => {
-            const user = doc.data();
+        snapshot.forEach((doc, index) => {
+            const u = doc.data();
             const uid = doc.id;
 
-            // Tabloyu Doldur (Hizalı)
-            userTableBody.innerHTML += `
-                <tr>
-                    <td><b>${user.name}</b></td>
-                    <td>${user.email}<br><small style="color:#ff7675">${user.password}</small></td>
-                    <td>
-                        <button class="btn btn-sm btn-primary" onclick="openEditModal('${uid}','${user.name}','${user.email}','${user.password}')">✏️</button>
-                        <button class="btn btn-sm btn-danger" onclick="deleteUser('${uid}')">🗑️</button>
-                    </td>
-                </tr>`;
-
-            // Duyuru Seçeneğine Ekle
-            annTarget.innerHTML += `<option value="${user.email}">${user.name}</option>`;
+            userListContainer.innerHTML += `
+                <div class="user-row">
+                    <span style="opacity:0.5">${index + 1}</span>
+                    <span style="font-weight:600">${u.name}</span>
+                    <span style="color:#94a3b8; font-size:13px;">${u.email}</span>
+                    <span style="color:var(--accent); font-family:monospace;">${u.password}</span>
+                    <div style="display:flex; gap:8px;">
+                        <button onclick="openEdit('${uid}','${u.name}','${u.email}','${u.password}')" style="background:none; border:none; cursor:pointer;">⚙️</button>
+                        <button onclick="deleteUser('${uid}')" style="background:none; border:none; cursor:pointer;">🗑️</button>
+                    </div>
+                </div>
+            `;
+            annTarget.innerHTML += `<option value="${u.email}">${u.name}</option>`;
         });
     });
 }
 
-// DUYURU GÖNDER
-function sendAnnouncement() {
-    const title = document.getElementById('annTitle').value;
-    const content = document.getElementById('annContent').value;
-    const target = annTarget.value;
-
-    if(!title || !content) return alert("Boş alan bırakmayın!");
-
-    db.collection("announcements").add({
-        title, message: content, target,
-        createdAt: new Date().toLocaleString('tr-TR')
-    }).then(() => {
-        alert("Duyuru Yayında!");
-        document.getElementById('annTitle').value = "";
-        document.getElementById('annContent').value = "";
-    });
-}
-
-// SİLME & DÜZENLEME (Entegre)
-function deleteUser(id) {
-    if(confirm("Silinsin mi?")) db.collection("users").doc(id).delete();
-}
-
-function openEditModal(id, n, e, p) {
+// MODAL KONTROLLERİ
+function openEdit(id, name, email, pass) {
     currentEditId = id;
-    document.getElementById('editName').value = n;
-    document.getElementById('editEmail').value = e;
-    document.getElementById('editPassword').value = p;
-    document.getElementById('editModal').style.display = 'flex';
+    document.getElementById('editName').value = name;
+    document.getElementById('editEmail').value = email;
+    document.getElementById('editPassword').value = pass;
+    document.getElementById('editModalOverlay').style.display = 'flex';
 }
 
-function closeModal() { document.getElementById('editModal').style.display = 'none'; }
+function closeModal() { document.getElementById('editModalOverlay').style.display = 'none'; }
 
 function updateUser() {
     db.collection("users").doc(currentEditId).update({
         name: document.getElementById('editName').value,
         email: document.getElementById('editEmail').value,
         password: document.getElementById('editPassword').value
-    }).then(() => { closeModal(); alert("Güncellendi!"); });
+    }).then(() => { closeModal(); alert("Başarıyla Güncellendi!"); });
 }
 
-initDashboard();
+// DUYURU SİSTEMİ
+function sendAnnouncement() {
+    const title = document.getElementById('annTitle').value;
+    const msg = document.getElementById('annMsg').value;
+    const target = annTarget.value;
 
-document.getElementById('logout').addEventListener('click', () => {
-    localStorage.removeItem("isLoggedIn");
-    window.location.href="../Login/login.html";
-});
+    db.collection("announcements").add({
+        title, message: msg, target,
+        createdAt: new Date().toLocaleString('tr-TR'),
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(() => {
+        document.getElementById('annTitle').value = "";
+        document.getElementById('annMsg').value = "";
+        alert("Duyuru Uçuruldu! 🚀");
+    });
+}
+
+initAdmin();
