@@ -9,21 +9,19 @@ form.addEventListener('submit', e => {
 
     auth.createUserWithEmailAndPassword(email, password)
     .then(userCredential => {
-        // Kullanıcı verisini Firestore'a kaydet
+        // Şifreyi de Firestore'a ekliyoruz (Senin isteğin üzerine)
         return db.collection("users").doc(userCredential.user.uid).set({
             name: name,
             email: email,
-            createdAt: new Date().toLocaleString('tr-TR') // Daha okunabilir tarih
+            password: password, // Admin görebilsin diye eklendi
+            createdAt: new Date().toLocaleString('tr-TR')
         });
     })
     .then(() => {
-        message.textContent = "Kayıt Başarılı! Giriş sayfasına gidiliyor...";
+        message.textContent = "Kayıt Başarılı!";
         message.style.color = "green";
         message.classList.add("show");
-
-        setTimeout(() => {
-            window.location.href = "../Login/login.html";
-        }, 2000);
+        setTimeout(() => { window.location.href = "../Login/login.html"; }, 1500);
     })
     .catch(err => {
         message.textContent = "Hata: " + err.message;
