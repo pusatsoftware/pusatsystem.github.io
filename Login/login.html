@@ -3,36 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <title>Giriş Yap</title>
-<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="login.css">
 
-<!-- Firebase SDK 9.23.0 -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
 <script src="../app.js"></script>
 </head>
 <body>
-<h1>Giriş Yap</h1>
-<form id="loginForm">
-  <input type="email" id="email" placeholder="Email" required>
-  <input type="password" id="password" placeholder="Şifre" required>
-  <button type="submit">Giriş Yap</button>
-</form>
-
-<script>
-document.getElementById('loginForm').addEventListener('submit', e => {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    auth.signInWithEmailAndPassword(email, password)
-    .then(userCredential => {
-        alert("Giriş başarılı!");
-        window.location.href = "../admin/admin.html";
-    })
-    .catch(err => alert(err.message));
-});
-</script>
+<div class="login-container">
+    <h1>Giriş Yap</h1>
+    <form id="loginForm">
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Şifre" required>
+        <button type="submit">Giriş Yap</button>
+    </form>
+    <div id="message"></div>
+</div>
+<script src="login.js"></script>
 </body>
 </html>
