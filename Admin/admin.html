@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Sistem Yönetim Paneli</title>
+    <title>Sistem Kontrol Merkezi</title>
     <link rel="stylesheet" href="admin.css">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -10,46 +10,55 @@
     <script src="../app.js"></script>
 </head>
 <body>
-    <div class="admin-wrapper">
-        <header>
-            <h1>Sistem Yönetim Paneli</h1>
-            <div class="admin-info">
-                <span>Hoş geldin, Admin</span>
-                <button id="logout">Çıkış Yap</button>
-            </div>
+    <div class="dashboard-container">
+        <header class="main-header">
+            <div class="logo">Pusat<b>Panel</b></div>
+            <button id="logout">Güvenli Çıkış</button>
         </header>
 
-        <section class="user-management">
-            <h2>Kayıtlı Kullanıcı Listesi</h2>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>İsim</th>
-                            <th>E-posta</th>
-                            <th>Şifre</th>
-                            <th>Kayıt Tarihi</th>
-                            <th>İşlemler</th>
-                        </tr>
-                    </thead>
-                    <tbody id="userTableBody">
-                        </tbody>
-                </table>
-            </div>
-        </section>
+        <div class="grid-layout">
+            <aside class="announcement-panel">
+                <h3>📢 Yeni Duyuru Yayınla</h3>
+                <div class="form-group">
+                    <input type="text" id="annTitle" placeholder="Duyuru Başlığı">
+                    <textarea id="annContent" placeholder="Duyuru metnini buraya yazın..."></textarea>
+                    <select id="annTarget">
+                        <option value="all">Tüm Kullanıcılara</option>
+                        </select>
+                    <button onclick="sendAnnouncement()" class="btn-primary">Yayınla</button>
+                </div>
+                <hr>
+                <h3>Aktif Duyurular</h3>
+                <div id="announcementList" class="scroll-box"></div>
+            </aside>
+
+            <main class="user-panel">
+                <h3>👥 Kayıtlı Kullanıcılar</h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Üye</th>
+                                <th>E-posta / Şifre</th>
+                                <th>Kayıt Tarihi</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTableBody"></tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
     </div>
 
     <div id="editModal" class="modal">
         <div class="modal-content">
-            <h3>Kullanıcı Bilgilerini Güncelle</h3>
-            <input type="text" id="editName" placeholder="İsim">
-            <input type="email" id="editEmail" placeholder="E-posta">
-            <input type="text" id="editPassword" placeholder="Şifre">
-            <div class="modal-buttons">
-                <button onclick="updateUser()" class="btn-save">Değişiklikleri Kaydet</button>
-                <button onclick="closeModal()" class="btn-cancel">İptal</button>
-            </div>
+            <h3>Üye Bilgilerini Güncelle</h3>
+            <input type="text" id="editName">
+            <input type="email" id="editEmail">
+            <input type="text" id="editPassword">
+            <button onclick="updateUser()" class="btn-primary">Güncelle</button>
+            <button onclick="closeModal()" class="btn-link">İptal</button>
         </div>
     </div>
 
