@@ -1,3 +1,19 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Kayıt Ol</title>
+<link rel="stylesheet" href="../style.css">
+
+<!-- Firebase SDK 9.23.0 -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script src="../app.js"></script>
+</head>
+<body>
+<h1>Kayıt Ol</h1>
 <form id="registerForm">
   <input type="email" id="email" placeholder="Email" required>
   <input type="password" id="password" placeholder="Şifre" required>
@@ -19,8 +35,10 @@ document.getElementById('registerForm').addEventListener('submit', e => {
             name: name
         });
         alert("Kayıt başarılı!");
-        window.location.href = "../Login/login.html";
+        window.location.href = "../login/login.html";
     })
     .catch(err => alert(err.message));
 });
 </script>
+</body>
+</html>
