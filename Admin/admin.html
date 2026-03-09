@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Pusat Ultra | Dashboard</title>
+    <title>Pusat Ultra | Yönetim Paneli</title>
     <link rel="stylesheet" href="admin.css">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -10,44 +10,66 @@
     <script src="../app.js"></script>
 </head>
 <body>
-    <div class="sidebar">
-        <h1 class="logo-text">PUSAT</h1>
-        <div class="nav-item active">📊 Dashboard</div>
-        <button id="logout" class="btn-logout">Çıkış</button>
-    </div>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <h1 class="logo">PUSAT<span>APP</span></h1>
+            <nav>
+                <div class="nav-item active">📊 Dashboard</div>
+            </nav>
+            <button id="logout" class="logout-btn">Güvenli Çıkış</button>
+        </aside>
 
-    <div class="main-grid">
-        <div class="glass-card">
-            <h3>🚀 Hızlı Duyuru</h3>
-            <div class="form-vertical">
-                <input type="text" id="annTitle" placeholder="Duyuru Başlığı">
-                <textarea id="annMsg" placeholder="Mesajınızı buraya yazın..." style="resize: none; height: 150px;"></textarea>
-                <select id="annTarget">
-                    <option value="all">Herkes</option>
-                </select>
-                <button class="btn-neon" onclick="sendAnnouncement()">GÖNDER</button>
-            </div>
-        </div>
-
-        <div class="glass-card">
-            <h3>👥 Kayıtlı Üyeler</h3>
-            <div id="userListContainer">
-                <div class="table-header">
-                    <span>#</span><span>İsim</span><span>E-posta</span><span>Şifre</span><span>İşlem</span>
+        <main class="content-area">
+            <section class="glass-card">
+                <h3>🚀 Hızlı Duyuru Yayınla</h3>
+                <div class="announcement-form">
+                    <input type="text" id="annTitle" placeholder="Duyuru Başlığı">
+                    <textarea id="annMsg" placeholder="Mesajınızı buraya yazın..." spellcheck="false"></textarea>
+                    <div class="form-footer">
+                        <select id="annTarget">
+                            <option value="all">Tüm Üyeler</option>
+                        </select>
+                        <button class="btn-neon" onclick="sendAnnouncement()">GÖNDER</button>
+                    </div>
                 </div>
-                <div id="userDataRows"></div>
-            </div>
-        </div>
+            </section>
+
+            <section class="glass-card">
+                <h3>👥 Kayıtlı Üyeler</h3>
+                <div class="user-table-container">
+                    <div class="table-header">
+                        <span>#</span>
+                        <span>İsim</span>
+                        <span>E-posta</span>
+                        <span>Şifre</span>
+                        <span style="text-align: right;">İşlem</span>
+                    </div>
+                    <div id="userDataRows" class="table-body">
+                        </div>
+                </div>
+            </section>
+        </main>
     </div>
 
     <div id="editModalOverlay" class="modal-overlay">
         <div class="edit-modal-card">
-            <h3>Üye Bilgilerini Güncelle</h3>
-            <input type="text" id="editName">
-            <input type="email" id="editEmail">
-            <input type="text" id="editPassword">
-            <div class="modal-btns">
-                <button class="btn-neon" onclick="updateUser()">✅ GÜNCELLE</button>
+            <h3>✨ Üye Bilgilerini Güncelle</h3>
+            <div class="edit-form">
+                <div class="field">
+                    <label>Kullanıcı Adı</label>
+                    <input type="text" id="editName">
+                </div>
+                <div class="field">
+                    <label>E-posta</label>
+                    <input type="email" id="editEmail">
+                </div>
+                <div class="field">
+                    <label>Şifre</label>
+                    <input type="text" id="editPassword">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-neon" onclick="updateUser()">KAYDET</button>
                 <button class="btn-cancel" onclick="closeModal()">İPTAL</button>
             </div>
         </div>
