@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Kullanıcı Paneli</title>
+    <title>Pusat Uygulama | Panel</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -12,32 +12,28 @@
 <body>
     <nav class="navbar">
         <div class="logo">Pusat<b>App</b></div>
-        <div class="nav-icons">
-            <div class="notification-bell" onclick="toggleNoti()">
-                🔔 <span id="notiCount" class="badge">0</span>
+        <div class="nav-right">
+            <div class="bell-container" onclick="toggleDropdown()">
+                🔔 <span id="notiBadge" class="badge">0</span>
+                <div id="notiDropdown" class="dropdown">
+                    <h4>Son Duyurular</h4>
+                    <div id="notiItems"></div>
+                </div>
             </div>
-            <button id="logoutBtn">Çıkış</button>
+            <button id="logoutBtn" class="btn-logout">Çıkış</button>
         </div>
     </nav>
 
-    <div id="notiDropdown" class="noti-dropdown">
-        <h3>Duyurular</h3>
-        <div id="notiList">
-            <p class="empty-msg">Henüz duyuru yok.</p>
-        </div>
+    <div class="hero-section">
+        <h1 id="welcomeText">Yükleniyor...</h1>
+        <p>Sistemden gelen tüm bildirimleri buradan takip edebilirsin.</p>
     </div>
 
-    <main class="content">
-        <h1>Hoş Geldin!</h1>
-        <p>Burası senin kişisel panelin.</p>
-    </main>
-
-    <div id="liveToast" class="toast">
-        <div class="toast-header">
-            <strong>Yeni Duyuru!</strong>
-            <button onclick="closeToast()">×</button>
+    <div id="toastBox" class="toast">
+        <div class="toast-content">
+            <span id="toastTitle"><b>Yeni Duyuru!</b></span>
+            <p id="toastMsg"></p>
         </div>
-        <div id="toastBody" class="toast-body"></div>
     </div>
 
     <script src="index.js"></script>
