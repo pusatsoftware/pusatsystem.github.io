@@ -11,14 +11,15 @@ loginForm.addEventListener('submit', e => {
         message.textContent = "Giriş Başarılı! Yönlendiriliyorsunuz...";
         message.style.color = "green";
         message.classList.add("show");
+        
+        // Klasör adın büyük harfse "Admin" kalsın, küçükse "admin" yap
         setTimeout(() => {
-            window.location.href = "../Admin/admin.html";
+            window.location.href = "../Admin/admin.html"; 
         }, 1500);
     })
     .catch(err => {
-        message.textContent = err.message;
+        message.textContent = "Hata: " + err.message;
         message.style.color = "red";
         message.classList.add("show");
     });
-
 });
