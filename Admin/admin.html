@@ -1,19 +1,14 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-<meta charset="UTF-8">
-<title>Admin Panel</title>
-<link rel="stylesheet" href="admin.css">
+<div id="admin-container">
+    <h1>Kullanıcı Yönetimi</h1>
+    <button id="logout">Güvenli Çıkış</button>
+    <ul id="userList"></ul>
+</div>
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="../app.js"></script>
-</head>
-<body>
-<h1>Admin Panel</h1>
-<button id="logout">Çıkış Yap</button>
-<ul id="userList"></ul>
-<script src="admin.js"></script>
-</body>
-</html>
+<div id="editModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:white; padding:30px; border-radius:15px; box-shadow:0 0 30px rgba(0,0,0,0.5); z-index:1000; width:300px;">
+    <h3 style="margin-top:0;">Bilgileri Güncelle</h3>
+    <input type="text" id="editName" style="width:100%; margin-bottom:10px; padding:8px;" placeholder="İsim">
+    <input type="email" id="editEmail" style="width:100%; margin-bottom:10px; padding:8px;" placeholder="Email">
+    <input type="text" id="editPassword" style="width:100%; margin-bottom:20px; padding:8px;" placeholder="Şifre">
+    <button onclick="updateUser()" style="width:100%; background:green; color:white; padding:10px; border:none; cursor:pointer;">Kaydet</button>
+    <button onclick="closeModal()" style="width:100%; background:gray; color:white; padding:10px; border:none; cursor:pointer; margin-top:5px;">İptal</button>
+</div>
