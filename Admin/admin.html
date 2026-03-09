@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Admin Panel</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="app.js"></script>
+</head>
+<body>
+<h1>Admin Panel</h1>
+<button id="logout">Çıkış Yap</button>
+<ul id="userList"></ul>
+
+<script>
+auth.onAuthStateChanged(user => {
+    if (!user) {
+        window.location.href = "login.html";
+    } else {
+        db.collection("users").get().then(snapshot => {
+            const list = document.getElementById('userList');
+            list.innerHTML = "";
+            snapshot.forEach(doc => {
+                const li = document.createElement('li');
+                li.textContent = doc.data().email;
+                list.appendChild(li);
+            });
+        });
+    }
+});
+
+document.getElementById('logout').addEventListener('click', () => {
+    auth.signOut().then(() => window.location.href="login.html");
+});
+</script>
+</body>
+</html>
