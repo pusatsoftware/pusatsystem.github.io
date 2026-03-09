@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Pusat Ultra | Yönetim Paneli</title>
+    <title>Pusat Ultra | Yönetim</title>
     <link rel="stylesheet" href="admin.css">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -10,41 +10,37 @@
     <script src="../app.js"></script>
 </head>
 <body>
-    <div class="admin-container">
+    <div class="admin-wrapper">
         <aside class="sidebar">
-            <h1 class="logo">PUSAT<span>APP</span></h1>
-            <nav>
-                <div class="nav-item active">📊 Dashboard</div>
-            </nav>
+            <h1 class="logo">PUSAT<span>PRO</span></h1>
+            <div class="nav-item active">📊 Dashboard</div>
             <button id="logout" class="logout-btn">Güvenli Çıkış</button>
         </aside>
 
-        <main class="content-area">
+        <main class="main-content">
             <section class="glass-card">
-                <h3>🚀 Hızlı Duyuru Yayınla</h3>
-                <div class="announcement-form">
-                    <input type="text" id="annTitle" placeholder="Duyuru Başlığı">
-                    <textarea id="annMsg" placeholder="Mesajınızı buraya yazın..." spellcheck="false"></textarea>
-                    <div class="form-footer">
-                        <select id="annTarget">
-                            <option value="all">Tüm Üyeler</option>
-                        </select>
-                        <button class="btn-neon" onclick="sendAnnouncement()">GÖNDER</button>
+                <h3>🚀 Hızlı Duyuru</h3>
+                <div class="ann-form">
+                    <input type="text" id="annTitle" placeholder="Duyuru Başlığı...">
+                    <textarea id="annMsg" placeholder="Mesajınızı buraya yazın..." style="resize: none;"></textarea>
+                    <div class="ann-footer">
+                        <select id="annTarget"><option value="all">Herkes</option></select>
+                        <button class="btn-neon" onclick="sendAnnouncement()">YAYINLA</button>
                     </div>
                 </div>
             </section>
 
             <section class="glass-card">
                 <h3>👥 Kayıtlı Üyeler</h3>
-                <div class="user-table-container">
-                    <div class="table-header">
+                <div class="table-container">
+                    <div class="t-header">
                         <span>#</span>
                         <span>İsim</span>
                         <span>E-posta</span>
                         <span>Şifre</span>
                         <span style="text-align: right;">İşlem</span>
                     </div>
-                    <div id="userDataRows" class="table-body">
+                    <div id="userDataRows" class="t-body">
                         </div>
                 </div>
             </section>
@@ -52,25 +48,16 @@
     </div>
 
     <div id="editModalOverlay" class="modal-overlay">
-        <div class="edit-modal-card">
+        <div class="edit-card">
             <h3>✨ Üye Bilgilerini Güncelle</h3>
-            <div class="edit-form">
-                <div class="field">
-                    <label>Kullanıcı Adı</label>
-                    <input type="text" id="editName">
-                </div>
-                <div class="field">
-                    <label>E-posta</label>
-                    <input type="email" id="editEmail">
-                </div>
-                <div class="field">
-                    <label>Şifre</label>
-                    <input type="text" id="editPassword">
-                </div>
+            <div class="edit-inputs">
+                <input type="text" id="editName" placeholder="Ad Soyad">
+                <input type="email" id="editEmail" placeholder="E-posta">
+                <input type="text" id="editPassword" placeholder="Şifre">
             </div>
-            <div class="modal-footer">
+            <div class="modal-actions">
                 <button class="btn-neon" onclick="updateUser()">KAYDET</button>
-                <button class="btn-cancel" onclick="closeModal()">İPTAL</button>
+                <button class="btn-close" onclick="closeModal()">İPTAL</button>
             </div>
         </div>
     </div>
