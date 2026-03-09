@@ -1,14 +1,58 @@
-<div id="admin-container">
-    <h1>Kullanıcı Yönetimi</h1>
-    <button id="logout">Güvenli Çıkış</button>
-    <ul id="userList"></ul>
-</div>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistem Yönetim Paneli</title>
+    <link rel="stylesheet" href="admin.css">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="../app.js"></script>
+</head>
+<body>
+    <div class="admin-wrapper">
+        <header>
+            <h1>Sistem Yönetim Paneli</h1>
+            <div class="admin-info">
+                <span>Hoş geldin, Admin</span>
+                <button id="logout">Çıkış Yap</button>
+            </div>
+        </header>
 
-<div id="editModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:white; padding:30px; border-radius:15px; box-shadow:0 0 30px rgba(0,0,0,0.5); z-index:1000; width:300px;">
-    <h3 style="margin-top:0;">Bilgileri Güncelle</h3>
-    <input type="text" id="editName" style="width:100%; margin-bottom:10px; padding:8px;" placeholder="İsim">
-    <input type="email" id="editEmail" style="width:100%; margin-bottom:10px; padding:8px;" placeholder="Email">
-    <input type="text" id="editPassword" style="width:100%; margin-bottom:20px; padding:8px;" placeholder="Şifre">
-    <button onclick="updateUser()" style="width:100%; background:green; color:white; padding:10px; border:none; cursor:pointer;">Kaydet</button>
-    <button onclick="closeModal()" style="width:100%; background:gray; color:white; padding:10px; border:none; cursor:pointer; margin-top:5px;">İptal</button>
-</div>
+        <section class="user-management">
+            <h2>Kayıtlı Kullanıcı Listesi</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>İsim</th>
+                            <th>E-posta</th>
+                            <th>Şifre</th>
+                            <th>Kayıt Tarihi</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h3>Kullanıcı Bilgilerini Güncelle</h3>
+            <input type="text" id="editName" placeholder="İsim">
+            <input type="email" id="editEmail" placeholder="E-posta">
+            <input type="text" id="editPassword" placeholder="Şifre">
+            <div class="modal-buttons">
+                <button onclick="updateUser()" class="btn-save">Değişiklikleri Kaydet</button>
+                <button onclick="closeModal()" class="btn-cancel">İptal</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
