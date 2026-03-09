@@ -9,13 +9,15 @@ form.addEventListener('submit', e => {
 
     auth.createUserWithEmailAndPassword(email, password)
     .then(userCredential => {
-        db.collection("users").doc(userCredential.user.uid).set({
+        // Kullanıcı verisini Firestore'a kaydet
+        return db.collection("users").doc(userCredential.user.uid).set({
             name: name,
             email: email,
-            createdAt: new Date().toISOString()
+            createdAt: new Date().toLocaleString('tr-TR') // Daha okunabilir tarih
         });
-
-        message.textContent = "Kayıt Başarılı! Yönlendiriliyorsunuz...";
+    })
+    .then(() => {
+        message.textContent = "Kayıt Başarılı! Giriş sayfasına gidiliyor...";
         message.style.color = "green";
         message.classList.add("show");
 
@@ -24,9 +26,8 @@ form.addEventListener('submit', e => {
         }, 2000);
     })
     .catch(err => {
-        message.textContent = err.message;
+        message.textContent = "Hata: " + err.message;
         message.style.color = "red";
         message.classList.add("show");
     });
 });
-
