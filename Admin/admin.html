@@ -2,69 +2,51 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Pusat Panel | Admin</title>
+    <title>Pusat Ultra | Yönetim</title>
     <link rel="stylesheet" href="admin.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="../app.js"></script>
 </head>
 <body>
-    <aside class="sidebar">
-        <h2>Pusat<b>Panel</b></h2>
-        <div class="nav-link active">📊 Dashboard</div>
-        <div class="nav-link">👥 Kullanıcılar</div>
-        <div class="nav-link">📢 Duyurular</div>
-        <button id="logout" class="btn btn-danger" style="margin-top: auto;">Güvenli Çıkış</button>
-    </aside>
+    <div class="sidebar">
+        <h1 class="logo-text">PUSAT</h1>
+        <div class="nav-item active">📊 Dashboard</div>
+        <button id="logout" class="btn-logout">Güvenli Çıkış</button>
+    </div>
 
-    <main class="main-content">
-        <header class="header">
-            <h1>Yönetim Masası</h1>
-            <div id="adminName">Admin Hesabı</div>
-        </header>
-
-        <div class="grid-layout">
-            <section class="card-table">
-                <h3>📢 Yeni Duyuru Yayınla</h3>
-                <div class="form-group">
-                    <input type="text" id="annTitle" placeholder="Duyuru Başlığı">
-                    <textarea id="annContent" placeholder="Duyuru içeriği..."></textarea>
-                    <select id="annTarget">
-                        <option value="all">Herkes</option>
-                    </select>
-                    <button onclick="sendAnnouncement()" class="btn btn-primary">Yayınla</button>
-                </div>
-            </section>
-
-            <section class="card-table">
-                <h3>👥 Kayıtlı Üyeler</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>İsim</th>
-                            <th>Email/Şifre</th>
-                            <th>İşlemler</th>
-                        </tr>
-                    </thead>
-                    <tbody id="userTableBody"></tbody>
-                </table>
-            </section>
+    <div class="main-content">
+        <div class="glass-card">
+            <h3>🚀 Hızlı Duyuru Yayınla</h3>
+            <div class="form-vertical">
+                <input type="text" id="annTitle" placeholder="Duyuru Başlığı">
+                <textarea id="annMsg" placeholder="Duyuru mesajınızı buraya yazın..."></textarea>
+                <select id="annTarget">
+                    <option value="all">Tüm Üyelere Gönder</option>
+                </select>
+                <button class="btn-neon" onclick="sendAnnouncement()">YAYINLA</button>
+            </div>
         </div>
-    </main>
 
-    <div id="editModal" class="modal">
-        <div class="modal-content">
-            <h3>Üye Düzenle</h3>
-            <input type="text" id="editName">
-            <input type="email" id="editEmail">
-            <input type="text" id="editPassword">
-            <button onclick="updateUser()" class="btn btn-primary">Güncelle</button>
-            <button onclick="closeModal()" class="btn-link">Kapat</button>
+        <div class="glass-card">
+            <h3>👥 Kayıtlı Üyeler</h3>
+            <div id="userListContainer" class="user-list-container">
+                </div>
+        </div>
+    </div>
+
+    <div id="editModalOverlay" class="modal-overlay">
+        <div class="edit-modal-card">
+            <h3>Üye Bilgilerini Güncelle</h3>
+            <input type="text" id="editName" placeholder="İsim">
+            <input type="email" id="editEmail" placeholder="E-posta">
+            <input type="text" id="editPassword" placeholder="Şifre">
+            <button class="btn-neon" onclick="updateUser()">✅ GÜNCELLE</button>
+            <button class="btn-cancel" onclick="closeModal()">İptal</button>
         </div>
     </div>
 
     <script src="admin.js"></script>
 </body>
-</html>
+</html> 
