@@ -1,4 +1,4 @@
-// Firebase SDK script ile uyumlu (compat versiyon)
+// Firebase SDK
 const firebaseConfig = {
   apiKey: "AIzaSyB9WxNwFwGS1OCFXNo00cP4XfKnsq01k-E",
   authDomain: "pusatsoftware-1520d.firebaseapp.com",
@@ -9,7 +9,6 @@ const firebaseConfig = {
   measurementId: "G-PEMB6TKB7F"
 };
 
-// Firebase başlat
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
