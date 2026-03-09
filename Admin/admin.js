@@ -1,44 +1,39 @@
-const userListContainer = document.getElementById('userListContainer');
-const annTarget = document.getElementById('annTarget');
 let currentEditId = "";
 
 function initAdmin() {
-    // KULLANICI LİSTESİ VE TABLO HİZALAMA
+    // Üye Listesini Kalem İkonlarıyla Doldur
     db.collection("users").orderBy("createdAt", "desc").onSnapshot(snapshot => {
-        userListContainer.innerHTML = `
-            <div class="table-header">
-                <span>#</span><span>İSİM</span><span>E-POSTA</span><span>ŞİFRE</span><span>EYLEM</span>
-            </div>
-        `;
+        const rowContainer = document.getElementById('userDataRows');
+        const annTarget = document.getElementById('annTarget');
+        rowContainer.innerHTML = "";
         annTarget.innerHTML = '<option value="all">🚀 Herkese Gönder</option>';
 
         snapshot.forEach((doc, index) => {
             const u = doc.data();
             const uid = doc.id;
 
-            userListContainer.innerHTML += `
+            rowContainer.innerHTML += `
                 <div class="user-row">
-                    <span style="opacity:0.5">${index + 1}</span>
-                    <span style="font-weight:600">${u.name}</span>
+                    <span style="opacity:0.4">${index + 1}</span>
+                    <span style="font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${u.name}</span>
                     <span style="color:#94a3b8; font-size:13px;">${u.email}</span>
                     <span style="color:var(--accent); font-family:monospace;">${u.password}</span>
-                    <div style="display:flex; gap:8px;">
-                        <button onclick="openEdit('${uid}','${u.name}','${u.email}','${u.password}')" style="background:none; border:none; cursor:pointer;">⚙️</button>
-                        <button onclick="deleteUser('${uid}')" style="background:none; border:none; cursor:pointer;">🗑️</button>
+                    <div style="display:flex; gap:15px; justify-content: flex-end;">
+                        <button class="action-btn edit-icon" onclick="openEdit('${uid}','${u.name}','${u.email}','${u.password}')" title="Düzenle">✏️</button>
+                        <button class="action-btn delete-icon" onclick="deleteUser('${uid}')" title="Sil">🗑️</button>
                     </div>
-                </div>
-            `;
+                </div>`;
             annTarget.innerHTML += `<option value="${u.email}">${u.name}</option>`;
         });
     });
 }
 
-// MODAL KONTROLLERİ
-function openEdit(id, name, email, pass) {
+// Düzenleme Fonksiyonları
+function openEdit(id, n, e, p) {
     currentEditId = id;
-    document.getElementById('editName').value = name;
-    document.getElementById('editEmail').value = email;
-    document.getElementById('editPassword').value = pass;
+    document.getElementById('editName').value = n;
+    document.getElementById('editEmail').value = e;
+    document.getElementById('editPassword').value = p;
     document.getElementById('editModalOverlay').style.display = 'flex';
 }
 
@@ -49,23 +44,29 @@ function updateUser() {
         name: document.getElementById('editName').value,
         email: document.getElementById('editEmail').value,
         password: document.getElementById('editPassword').value
-    }).then(() => { closeModal(); alert("Başarıyla Güncellendi!"); });
+    }).then(() => { closeModal(); alert("Üye başarıyla güncellendi! ✅"); });
 }
 
-// DUYURU SİSTEMİ
+function deleteUser(id) {
+    if(confirm("Bu üyeyi silmek istediğine emin misin?")) db.collection("users").doc(id).delete();
+}
+
+// Duyuru Gönder (Kullanıcı Paneline Sinyal Gönderir)
 function sendAnnouncement() {
     const title = document.getElementById('annTitle').value;
-    const msg = document.getElementById('annMsg').value;
-    const target = annTarget.value;
+    const message = document.getElementById('annMsg').value;
+    const target = document.getElementById('annTarget').value;
+
+    if(!title || !message) return alert("Lütfen boş alan bırakmayın!");
 
     db.collection("announcements").add({
-        title, message: msg, target,
+        title, message, target,
         createdAt: new Date().toLocaleString('tr-TR'),
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
     }).then(() => {
         document.getElementById('annTitle').value = "";
         document.getElementById('annMsg').value = "";
-        alert("Duyuru Uçuruldu! 🚀");
+        alert("Duyuru yayında! 🚀");
     });
 }
 
