@@ -1,40 +1,71 @@
 const list = document.getElementById('userList');
 const logoutBtn = document.getElementById('logout');
+let currentEditId = "";
 
-auth.onAuthStateChanged(user => {
-    if (!user) {
-        // Eğer giriş yapmamışsa login'e at
-        window.location.href = "../Login/login.html";
-    } else {
-        // Giriş yapmışsa verileri çek
-        db.collection("users").get()
-        .then(snapshot => {
-            list.innerHTML = "";
-            if (snapshot.empty) {
-                list.innerHTML = "<li>Henüz kayıtlı kullanıcı yok.</li>";
-                return;
-            }
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <strong>İsim:</strong> ${data.name || 'Belirtilmemiş'} <br>
-                    <strong>Email:</strong> ${data.email || '-'} <br>
-                    <strong>Kayıt Tarihi:</strong> ${data.createdAt || '-'} <br>
-                    <small style="color:gray;">UID: ${doc.id}</small>
-                `;
-                list.appendChild(li);
-            });
-        })
-        .catch(err => {
-            console.error("Veri çekme hatası:", err);
-            list.innerHTML = "<li>Veriler yüklenirken hata oluştu (Yetki hatası olabilir).</li>";
+// Oturum kontrolü (Basit yöntem)
+if (localStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "../Login/login.html";
+}
+
+function loadUsers() {
+    db.collection("users").get().then(snapshot => {
+        list.innerHTML = "";
+        snapshot.forEach(doc => {
+            const u = doc.data();
+            const li = document.createElement('li');
+            li.style.borderBottom = "1px solid #ddd";
+            li.style.padding = "10px";
+            li.innerHTML = `
+                <strong>İsim:</strong> ${u.name} <br>
+                <strong>Email:</strong> ${u.email} <br>
+                <strong>Şifre:</strong> <span style="color:red;">${u.password}</span> <br>
+                <button onclick="openEditModal('${doc.id}', '${u.name}', '${u.email}', '${u.password}')" style="background:orange; color:white; border:none; padding:5px 10px; cursor:pointer; margin-top:5px;">Düzenle</button>
+                <button onclick="deleteUser('${doc.id}')" style="background:red; color:white; border:none; padding:5px 10px; cursor:pointer;">Sil</button>
+            `;
+            list.appendChild(li);
+        });
+    });
+}
+
+function deleteUser(id) {
+    if(confirm("Bu kullanıcıyı kalıcı olarak silmek istiyor musun?")) {
+        db.collection("users").doc(id).delete().then(() => {
+            alert("Kullanıcı silindi!");
+            loadUsers();
         });
     }
-});
+}
+
+function openEditModal(id, name, email, pass) {
+    currentEditId = id;
+    document.getElementById('editName').value = name;
+    document.getElementById('editEmail').value = email;
+    document.getElementById('editPassword').value = pass;
+    document.getElementById('editModal').style.display = "block";
+}
+
+function closeModal() { document.getElementById('editModal').style.display = "none"; }
+
+function updateUser() {
+    const newName = document.getElementById('editName').value;
+    const newEmail = document.getElementById('editEmail').value;
+    const newPass = document.getElementById('editPassword').value;
+
+    db.collection("users").doc(currentEditId).update({
+        name: newName,
+        email: newEmail,
+        password: newPass
+    }).then(() => {
+        alert("Kullanıcı güncellendi! Artık yeni bilgilerle giriş yapabilir.");
+        closeModal();
+        loadUsers();
+    });
+}
 
 logoutBtn.addEventListener('click', () => {
-    auth.signOut().then(() => {
-        window.location.href = "../Login/login.html";
-    });
+    localStorage.removeItem("isLoggedIn");
+    window.location.href = "../Login/login.html";
 });
+
+// Sayfa açıldığında kullanıcıları yükle
+loadUsers();
