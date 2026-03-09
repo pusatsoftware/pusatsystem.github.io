@@ -20,7 +20,7 @@ form.addEventListener('submit', e => {
         message.classList.add("show");
 
         setTimeout(() => {
-            window.location.href = "../login/login.html";
+            window.location.href = "../Login/login.html";
         }, 2000);
     })
     .catch(err => {
@@ -29,3 +29,4 @@ form.addEventListener('submit', e => {
         message.classList.add("show");
     });
 });
+
