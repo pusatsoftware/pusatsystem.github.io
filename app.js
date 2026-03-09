@@ -1,4 +1,4 @@
-// Firebase SDK
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyB9WxNwFwGS1OCFXNo00cP4XfKnsq01k-E",
   authDomain: "pusatsoftware-1520d.firebaseapp.com",
