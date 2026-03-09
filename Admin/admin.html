@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Pusat Ultra | Yönetim</title>
+    <title>Pusat Ultra | Dashboard</title>
     <link rel="stylesheet" href="admin.css">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -13,40 +13,46 @@
     <div class="sidebar">
         <h1 class="logo-text">PUSAT</h1>
         <div class="nav-item active">📊 Dashboard</div>
-        <button id="logout" class="btn-logout">Güvenli Çıkış</button>
+        <button id="logout" class="btn-logout">Çıkış</button>
     </div>
 
-    <div class="main-content">
+    <div class="main-grid">
         <div class="glass-card">
-            <h3>🚀 Hızlı Duyuru Yayınla</h3>
+            <h3>🚀 Hızlı Duyuru</h3>
             <div class="form-vertical">
                 <input type="text" id="annTitle" placeholder="Duyuru Başlığı">
-                <textarea id="annMsg" placeholder="Duyuru mesajınızı buraya yazın..."></textarea>
+                <textarea id="annMsg" placeholder="Mesajınızı buraya yazın..." style="resize: none; height: 150px;"></textarea>
                 <select id="annTarget">
-                    <option value="all">Tüm Üyelere Gönder</option>
+                    <option value="all">Herkes</option>
                 </select>
-                <button class="btn-neon" onclick="sendAnnouncement()">YAYINLA</button>
+                <button class="btn-neon" onclick="sendAnnouncement()">GÖNDER</button>
             </div>
         </div>
 
         <div class="glass-card">
             <h3>👥 Kayıtlı Üyeler</h3>
-            <div id="userListContainer" class="user-list-container">
+            <div id="userListContainer">
+                <div class="table-header">
+                    <span>#</span><span>İsim</span><span>E-posta</span><span>Şifre</span><span>İşlem</span>
                 </div>
+                <div id="userDataRows"></div>
+            </div>
         </div>
     </div>
 
     <div id="editModalOverlay" class="modal-overlay">
         <div class="edit-modal-card">
             <h3>Üye Bilgilerini Güncelle</h3>
-            <input type="text" id="editName" placeholder="İsim">
-            <input type="email" id="editEmail" placeholder="E-posta">
-            <input type="text" id="editPassword" placeholder="Şifre">
-            <button class="btn-neon" onclick="updateUser()">✅ GÜNCELLE</button>
-            <button class="btn-cancel" onclick="closeModal()">İptal</button>
+            <input type="text" id="editName">
+            <input type="email" id="editEmail">
+            <input type="text" id="editPassword">
+            <div class="modal-btns">
+                <button class="btn-neon" onclick="updateUser()">✅ GÜNCELLE</button>
+                <button class="btn-cancel" onclick="closeModal()">İPTAL</button>
+            </div>
         </div>
     </div>
 
     <script src="admin.js"></script>
 </body>
-</html> 
+</html>
