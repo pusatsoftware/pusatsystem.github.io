@@ -12,7 +12,7 @@ loginForm.addEventListener('submit', e => {
         message.style.color = "green";
         message.classList.add("show");
         setTimeout(() => {
-            window.location.href = "../admin/admin.html";
+            window.location.href = "../Admin/admin.html";
         }, 1500);
     })
     .catch(err => {
@@ -20,4 +20,5 @@ loginForm.addEventListener('submit', e => {
         message.style.color = "red";
         message.classList.add("show");
     });
+
 });
