@@ -1,19 +1,7 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-<meta charset="UTF-8">
-<title>Kayıt Ol</title>
-<link rel="stylesheet" href="style.css">
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="app.js"></script>
-</head>
-<body>
-<h1>Kayıt Ol</h1>
 <form id="registerForm">
-  <input type="email" id="email" placeholder="Email">
-  <input type="password" id="password" placeholder="Şifre">
+  <input type="email" id="email" placeholder="Email" required>
+  <input type="password" id="password" placeholder="Şifre" required>
+  <input type="text" id="name" placeholder="İsim">
   <button type="submit">Kayıt Ol</button>
 </form>
 
@@ -22,17 +10,17 @@ document.getElementById('registerForm').addEventListener('submit', e => {
     e.preventDefault();
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+    const name = document.getElementById('name').value;
 
     auth.createUserWithEmailAndPassword(email, password)
     .then(userCredential => {
         db.collection("users").doc(userCredential.user.uid).set({
-            email: email
+            email: email,
+            name: name
         });
-        alert("Kayıt başarılı: " + email);
-        window.location.href = "login.html";
+        alert("Kayıt başarılı!");
+        window.location.href = "../Login/login.html";
     })
     .catch(err => alert(err.message));
 });
 </script>
-</body>
-</html>
