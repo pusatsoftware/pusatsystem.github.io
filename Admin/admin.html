@@ -10,7 +10,7 @@
     <script src="../app.js"></script>
 </head>
 <body>
-    <div id="toastNotification" class="toast-msg">🚀 Duyuru Başarıyla Yayınlandı!</div>
+    <div id="toastNotification" class="toast-box">✅ Duyuru Başarıyla Yayınlandı!</div>
 
     <div class="admin-wrapper">
         <aside class="sidebar">
@@ -22,18 +22,21 @@
         <main class="main-content">
             <section class="glass-card">
                 <h3>🚀 Hızlı Duyuru</h3>
-                <div class="announcement-row">
-                    <div class="ann-inputs">
+                <div class="ann-grid-system">
+                    <div class="ann-main">
                         <input type="text" id="annTitle" placeholder="Duyuru Başlığı...">
-                        <textarea id="annMsg" placeholder="Mesajınızı buraya yazın..." style="resize: none;"></textarea>
+                        <textarea id="annMsg" placeholder="Mesajınızı buraya yazın..."></textarea>
                     </div>
-                    <div class="ann-actions">
-                        <select id="annTarget" class="target-select">
-                            <option value="all">Herkes</option>
-                        </select>
-                        <button class="btn-publish-ultra" onclick="sendAnnouncement()">
-                            YAYINLA
-                            <div class="btn-shine"></div>
+                    <div class="ann-side">
+                        <div class="target-group">
+                            <label>Hedef Kitle</label>
+                            <select id="annTarget">
+                                <option value="all">Herkes</option>
+                            </select>
+                        </div>
+                        <button class="btn-ultra-modern" onclick="sendAnnouncement()">
+                            <span>YAYINLA</span>
+                            <div class="shimmer"></div>
                         </button>
                     </div>
                 </div>
