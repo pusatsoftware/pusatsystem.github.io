@@ -20,14 +20,14 @@
         <main class="main-content">
             <section class="glass-card">
                 <h3>🚀 Hızlı Duyuru</h3>
-                <div class="announcement-row">
-                    <div class="ann-inputs">
+                <div class="announcement-row" style="display: flex; gap: 20px; align-items: stretch;">
+                    <div class="ann-inputs" style="flex: 1; display: flex; flex-direction: column; gap: 10px;">
                         <input type="text" id="annTitle" placeholder="Duyuru Başlığı...">
-                        <textarea id="annMsg" placeholder="Mesajınızı buraya yazın..." style="resize: none;"></textarea>
+                        <textarea id="annMsg" placeholder="Mesajınızı buraya yazın..." style="resize: none; height: 100px; width: 100%;"></textarea>
                     </div>
-                    <div class="ann-actions">
-                        <select id="annTarget"><option value="all">Herkes</option></select>
-                        <button class="btn-publish" onclick="sendAnnouncement()">YAYINLA</button>
+                    <div class="ann-actions" style="width: 160px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end;">
+                        <select id="annTarget" style="width: 100%;"><option value="all">Herkes</option></select>
+                        <button class="btn-publish-modern" onclick="sendAnnouncement()">YAYINLA</button>
                     </div>
                 </div>
             </section>
