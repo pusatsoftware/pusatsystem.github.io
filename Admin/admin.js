@@ -21,31 +21,6 @@ function startApp() {
     });
 }
 
-function sendAnnouncement() {
-    const titleInput = document.getElementById('annTitle');
-    const msgInput = document.getElementById('annMsg');
-    const toast = document.getElementById('toastNotification');
-
-    if(!titleInput.value || !msgInput.value) return alert("Boş alanları doldur kanka!");
-
-    db.collection("announcements").add({
-        title: titleInput.value,
-        message: msgInput.value,
-        target: document.getElementById('annTarget').value,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(() => {
-        // 1. Toast'u fırlat
-        toast.classList.add('active');
-        
-        // 2. Formu tertemiz et
-        titleInput.value = "";
-        msgInput.value = "";
-        
-        // 3. 3 saniye sonra toast'u kapat
-        setTimeout(() => { toast.classList.remove('active'); }, 3000);
-    });
-}
-
 function openEdit(id, n, e, p) {
     currentEditId = id;
     document.getElementById('editName').value = n;
