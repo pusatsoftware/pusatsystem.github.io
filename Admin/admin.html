@@ -33,12 +33,17 @@
     <div id="editModalOverlay" class="modal-overlay">
         <div class="edit-card">
             <h3>✨ Bilgileri Güncelle</h3>
-            <input type="text" id="editName" placeholder="İsim">
-            <input type="email" id="editEmail" placeholder="E-posta">
-            <input type="text" id="editPassword" placeholder="Şifre">
+            <div class="input-group">
+                <input type="text" id="editName" placeholder="İsim">
+                <input type="email" id="editEmail" placeholder="E-posta">
+                <input type="text" id="editPassword" placeholder="Şifre">
+            </div>
             <div class="modal-btns">
-                <button class="btn-save" onclick="updateUser()">KAYDET</button>
-                <button class="btn-close" onclick="closeModal()">İPTAL</button>
+                <button class="btn-modern-save" onclick="updateUser()">
+                    <span>KAYDET</span>
+                    <div class="btn-shine"></div>
+                </button>
+                <button class="btn-modern-close" onclick="closeModal()">İPTAL</button>
             </div>
         </div>
     </div>
