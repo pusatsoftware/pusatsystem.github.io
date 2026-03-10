@@ -13,14 +13,12 @@
     <div class="admin-wrapper">
         <aside class="sidebar">
             <h1 class="logo-modern">Pusat<span>Systems</span></h1>
-            
             <nav class="side-nav">
                 <div class="nav-item active">
                     <span class="nav-icon">👥</span>
                     <span class="nav-text">Kullanıcılar</span>
                 </div>
             </nav>
-
             <button id="logout" class="btn-exit-ultra">
                 <span class="exit-icon">🚪</span>
                 <span>ÇIKIŞ YAP</span>
@@ -53,6 +51,26 @@
                 <button class="btn-save-modern" onclick="updateUser()">KAYDET</button>
                 <button class="btn-cancel-modern" onclick="closeModal()">İPTAL</button>
             </div>
+        </div>
+    </div>
+
+    <div id="deleteModalOverlay" class="modal-overlay">
+        <div class="alert-card danger-pattern">
+            <div class="icon-circle danger-icon">🗑️</div>
+            <h3>Emin misin?</h3>
+            <p>Bu kullanıcıyı Pusat Systems'ten kalıcı olarak siliyorsun. Geri dönüşü yok!</p>
+            <div class="modal-btns" style="width: 100%;">
+                <button class="btn-cancel-modern" onclick="closeDeleteModal()">İPTAL</button>
+                <button class="btn-save-modern" style="background: var(--danger); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);" onclick="confirmDelete()">EVET, SİL</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="successModalOverlay" class="modal-overlay">
+        <div class="alert-card success-pattern">
+            <div class="icon-circle success-icon">✅</div>
+            <h3>İşlem Başarılı!</h3>
+            <p>Kullanıcı bilgileri mermi gibi kaydedildi.</p>
         </div>
     </div>
 
