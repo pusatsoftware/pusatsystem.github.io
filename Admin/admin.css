@@ -1,43 +1,59 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-:root { --bg: #0b0e14; --card: #161b22; --primary: #6366f1; }
+
+:root { 
+    --bg: #0b0e14; 
+    --card: #161b22; 
+    --primary: #6366f1; 
+    --danger: #ef4444; 
+}
 
 body { margin: 0; background: var(--bg); color: white; font-family: 'Plus Jakarta Sans', sans-serif; overflow: hidden; }
 .admin-wrapper { display: flex; height: 100vh; }
-.sidebar { width: 240px; background: var(--card); padding: 30px; border-right: 1px solid rgba(255,255,255,0.05); }
-.main-content { flex: 1; padding: 30px; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; }
-.glass-card { background: var(--card); border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); }
+
+/* SIDEBAR TASARIMI */
+.sidebar { 
+    width: 240px; background: var(--card); padding: 40px 20px; 
+    display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); 
+}
+
+.logo-modern { font-size: 22px; font-weight: 800; margin-bottom: 50px; color: #fff; letter-spacing: -0.5px; }
+.logo-modern span { color: var(--primary); font-weight: 400; margin-left: 2px; }
+
+.side-nav { flex: 1; }
+.nav-item { padding: 14px 18px; border-radius: 12px; cursor: pointer; font-weight: 600; color: #94a3b8; transition: 0.3s; margin-bottom: 5px; }
+.nav-item.active { background: rgba(99, 102, 241, 0.1); color: var(--primary); }
+
+/* ÇIKIŞ BUTONU (MODERN & KIRMIZI) */
+.btn-exit-ultra {
+    position: relative; background: rgba(239, 68, 68, 0.08); color: var(--danger);
+    border: 1px solid rgba(239, 68, 68, 0.2); padding: 14px; border-radius: 14px;
+    font-weight: 800; font-size: 13px; cursor: pointer; overflow: hidden;
+    transition: 0.4s; text-transform: uppercase; margin-top: auto;
+}
+.btn-exit-ultra:hover { background: var(--danger); color: white; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4); }
+
+/* ANA İÇERİK */
+.main-content { flex: 1; padding: 35px; overflow-y: auto; background: linear-gradient(to bottom right, #0b0e14, #111827); }
+.glass-card { background: var(--card); border-radius: 24px; padding: 30px; border: 1px solid rgba(255,255,255,0.03); }
 
 /* TABLO */
-.t-header, .user-row {
-    display: grid; grid-template-columns: 40px 1fr 1.5fr 1fr 100px;
-    gap: 15px; align-items: center; padding: 12px 20px;
-}
-.t-header { color: var(--primary); font-weight: 800; font-size: 11px; text-transform: uppercase; opacity: 0.7; }
-.user-row { background: rgba(255,255,255,0.02); border-radius: 12px; margin-top: 8px; }
+.t-header, .user-row { display: grid; grid-template-columns: 45px 1.5fr 2fr 1.2fr 100px; gap: 15px; align-items: center; padding: 15px 20px; }
+.t-header { color: var(--primary); font-weight: 800; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.user-row { background: rgba(255,255,255,0.02); border-radius: 14px; margin-top: 10px; transition: 0.3s; border: 1px solid transparent; }
+.user-row:hover { background: rgba(255,255,255,0.05); border-color: rgba(99, 102, 241, 0.2); transform: scale(1.005); }
 
-/* DÜZENLEME EKRANI (SİMSİYAH ARKA PLAN SORUNU ÇÖZÜLDÜ) */
+/* MODAL & BLUR ARKA PLAN (SİYAH SORUNU ÇÖZÜLDÜ) */
 .modal-overlay { 
     position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-    /* Burası 0.9'du, simsiyah yapıyordu. 0.4 yapıp arkaya blur ekledim, çok daha modern oldu */
-    background: rgba(11, 14, 20, 0.6); backdrop-filter: blur(8px); 
+    background: rgba(11, 14, 20, 0.6); backdrop-filter: blur(12px); 
     display: none; justify-content: center; align-items: center; z-index: 1000; 
 }
+.edit-card { background: #1e293b; padding: 35px; border-radius: 28px; border: 1px solid var(--primary); width: 360px; display: flex; flex-direction: column; gap: 20px; box-shadow: 0 25px 50px rgba(0,0,0,0.4); }
+.edit-card input { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 14px; border-radius: 12px; outline: none; transition: 0.3s; }
 
-.edit-card { background: #1e293b; padding: 30px; border-radius: 25px; border: 1px solid var(--primary); width: 350px; display: flex; flex-direction: column; gap: 15px; }
-.edit-card input { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px; border-radius: 10px; outline: none; width: 100%; box-sizing: border-box; }
-
-/* MODERN KAYDET VE İPTAL BUTONLARI */
-.modal-btns { display: flex; gap: 15px; margin-top: 10px; }
-
-.btn-save-modern {
-    flex: 1; padding: 12px; border-radius: 10px; border: none; font-weight: 800; cursor: pointer;
-    background: linear-gradient(45deg, #6366f1, #8b5cf6); color: white;
-    transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
-}
-.btn-save-modern:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(99, 102, 241, 0.6); }
-
-.btn-cancel-modern {
-    flex: 1; padding: 12px; border-radius: 10px; border: none; font-weight: 800; cursor: pointer;
-    background: #3f3f46; color: white; transition: all 0.3s ease;
-}
-.btn-cancel-modern:hover { background: #ef4444; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4); }
+/* MODAL BUTONLARI */
+.modal-btns { display: flex; gap: 15px; }
+.btn-save-modern { flex: 1.5; padding: 14px; border-radius: 12px; border: none; font-weight: 800; background: linear-gradient(45deg, #6366f1, #8b5cf6); color: white; cursor: pointer; transition: 0.3s; }
+.btn-save-modern:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(99, 102, 241, 0.4); }
+.btn-cancel-modern { flex: 1; padding: 14px; border-radius: 12px; border: none; font-weight: 800; background: #3f3f46; color: white; cursor: pointer; transition: 0.3s; }
+.btn-cancel-modern:hover { background: var(--danger); transform: translateY(-3px); }
