@@ -1,21 +1,21 @@
 let currentEditId = "";
 
-function initAdmin() {
+function startApp() {
+    // Verileri Dinle ve Tabloya Bas
     db.collection("users").orderBy("createdAt", "desc").onSnapshot(snapshot => {
-        const rowContainer = document.getElementById('userDataRows');
-        rowContainer.innerHTML = "";
-
+        const rows = document.getElementById('userDataRows');
+        rows.innerHTML = "";
         snapshot.forEach((doc, index) => {
             const u = doc.data();
-            rowContainer.innerHTML += `
+            rows.innerHTML += `
                 <div class="user-row">
                     <span style="opacity:0.4">${index + 1}</span>
                     <span style="font-weight:600">${u.name}</span>
-                    <span style="color:#94a3b8; font-size:13px">${u.email}</span>
+                    <span style="color:#94a3b8">${u.email}</span>
                     <span style="color:#a855f7; font-family:monospace;">${u.password}</span>
                     <div style="display:flex; gap:15px; justify-content: flex-end;">
-                        <button onclick="openEdit('${doc.id}','${u.name}','${u.email}','${u.password}')" style="background:none; border:none; cursor:pointer; font-size:18px;">✏️</button>
-                        <button onclick="deleteUser('${doc.id}')" style="background:none; border:none; cursor:pointer; font-size:18px;">🗑️</button>
+                        <button onclick="openEdit('${doc.id}','${u.name}','${u.email}','${u.password}')" style="background:none; border:none; cursor:pointer;">✏️</button>
+                        <button onclick="deleteUser('${doc.id}')" style="background:none; border:none; cursor:pointer;">🗑️</button>
                     </div>
                 </div>`;
         });
@@ -37,7 +37,15 @@ function updateUser() {
         name: document.getElementById('editName').value,
         email: document.getElementById('editEmail').value,
         password: document.getElementById('editPassword').value
-    }).then(() => { closeModal(); alert("Güncellendi! ✅"); });
+    }).then(() => { closeModal(); alert("Güncellendi!"); });
 }
 
-initAdmin();
+function sendAnnouncement() {
+    const t = document.getElementById('annTitle').value;
+    const m = document.getElementById('annMsg').value;
+    if(!t || !m) return alert("Boş bırakma!");
+    db.collection("announcements").add({ title: t, message: m, timestamp: firebase.firestore.FieldValue.serverTimestamp() })
+    .then(() => { alert("Yayınlandı! 🚀"); });
+}
+
+startApp();
