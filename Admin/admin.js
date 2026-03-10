@@ -25,7 +25,6 @@ function startApp() {
     });
 }
 
-// 1. DÜZENLEME MODALI AÇ/KAPAT
 function openEdit(id, n, e, p) {
     currentEditId = id;
     document.getElementById('editName').value = n;
@@ -35,7 +34,6 @@ function openEdit(id, n, e, p) {
 }
 function closeModal() { document.getElementById('editModalOverlay').style.display = 'none'; }
 
-// 2. KULLANICIYI KAYDET VE BAŞARI ANİMASYONUNU GÖSTER
 function updateUser() {
     db.collection("users").doc(currentEditId).update({
         name: document.getElementById('editName').value,
@@ -43,38 +41,29 @@ function updateUser() {
         password: document.getElementById('editPassword').value
     }).then(() => { 
         closeModal(); 
-        
         const successModal = document.getElementById('successModalOverlay');
         successModal.style.display = 'flex';
-        
-        setTimeout(() => {
-            successModal.style.display = 'none';
-        }, 2500);
+        setTimeout(() => { successModal.style.display = 'none'; }, 2000);
     });
 }
 
-// 3. SİLME ONAY MODALINI AÇ
 function deleteUser(id) {
     userToDelete = id; 
     document.getElementById('deleteModalOverlay').style.display = 'flex';
 }
+function closeDeleteModal() { document.getElementById('deleteModalOverlay').style.display = 'none'; }
 
-// 4. SİLME ONAY MODALINI KAPAT
-function closeDeleteModal() {
-    document.getElementById('deleteModalOverlay').style.display = 'none';
-    userToDelete = ""; 
-}
-
-// 5. KULLANICIYI VERİTABANINDAN SİL
 function confirmDelete() {
     if(userToDelete) {
         db.collection("users").doc(userToDelete).delete().then(() => {
             closeDeleteModal(); 
+            const delSuccess = document.getElementById('deleteSuccessModalOverlay');
+            delSuccess.style.display = 'flex';
+            setTimeout(() => { delSuccess.style.display = 'none'; }, 2000);
         });
     }
 }
 
-// 6. ÇIKIŞ YAP
 document.getElementById('logout').addEventListener('click', () => {
     auth.signOut().then(() => { window.location.href = "../index.html"; });
 });
