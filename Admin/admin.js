@@ -1,4 +1,5 @@
 let currentEditId = "";
+let userToDelete = "";
 
 function startApp() {
     db.collection("users").orderBy("createdAt", "desc").onSnapshot(snapshot => {
@@ -24,6 +25,7 @@ function startApp() {
     });
 }
 
+// 1. DÜZENLEME MODALI AÇ/KAPAT
 function openEdit(id, n, e, p) {
     currentEditId = id;
     document.getElementById('editName').value = n;
@@ -31,23 +33,48 @@ function openEdit(id, n, e, p) {
     document.getElementById('editPassword').value = p;
     document.getElementById('editModalOverlay').style.display = 'flex';
 }
-
 function closeModal() { document.getElementById('editModalOverlay').style.display = 'none'; }
 
+// 2. KULLANICIYI KAYDET VE BAŞARI ANİMASYONUNU GÖSTER
 function updateUser() {
     db.collection("users").doc(currentEditId).update({
         name: document.getElementById('editName').value,
         email: document.getElementById('editEmail').value,
         password: document.getElementById('editPassword').value
-    }).then(() => { closeModal(); });
+    }).then(() => { 
+        closeModal(); 
+        
+        const successModal = document.getElementById('successModalOverlay');
+        successModal.style.display = 'flex';
+        
+        setTimeout(() => {
+            successModal.style.display = 'none';
+        }, 2500);
+    });
 }
 
+// 3. SİLME ONAY MODALINI AÇ
 function deleteUser(id) {
-    if(confirm("Silmek istediğine emin misin?")) {
-        db.collection("users").doc(id).delete();
+    userToDelete = id; 
+    document.getElementById('deleteModalOverlay').style.display = 'flex';
+}
+
+// 4. SİLME ONAY MODALINI KAPAT
+function closeDeleteModal() {
+    document.getElementById('deleteModalOverlay').style.display = 'none';
+    userToDelete = ""; 
+}
+
+// 5. KULLANICIYI VERİTABANINDAN SİL
+function confirmDelete() {
+    if(userToDelete) {
+        db.collection("users").doc(userToDelete).delete().then(() => {
+            closeDeleteModal(); 
+        });
     }
 }
 
+// 6. ÇIKIŞ YAP
 document.getElementById('logout').addEventListener('click', () => {
     auth.signOut().then(() => { window.location.href = "../index.html"; });
 });
