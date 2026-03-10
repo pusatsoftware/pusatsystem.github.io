@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Pusat Pro | Yönetim Paneli</title>
+    <title>Pusat Pro | Admin</title>
     <link rel="stylesheet" href="admin.css">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -10,19 +10,17 @@
     <script src="../app.js"></script>
 </head>
 <body>
-    <div class="admin-layout">
+    <div class="admin-wrapper">
         <aside class="sidebar">
-            <h1 class="brand">PUSAT<span>PRO</span></h1>
-            <nav class="menu">
-                <div class="menu-item active">📊 Dashboard</div>
-            </nav>
-            <button id="logout" class="btn-exit">Çıkış Yap</button>
+            <h1 class="logo">PUSAT<span>PRO</span></h1>
+            <div class="nav-item active">📊 Dashboard</div>
+            <button id="logout" class="btn-exit">Çıkış</button>
         </aside>
 
         <main class="main-content">
-            <section class="glass-panel">
-                <div class="panel-header">🚀 Hızlı Duyuru</div>
-                <div class="announcement-grid">
+            <section class="glass-card">
+                <h3>🚀 Hızlı Duyuru</h3>
+                <div class="announcement-row">
                     <div class="ann-inputs">
                         <input type="text" id="annTitle" placeholder="Duyuru Başlığı...">
                         <textarea id="annMsg" placeholder="Mesajınızı buraya yazın..." style="resize: none;"></textarea>
@@ -34,4 +32,31 @@
                 </div>
             </section>
 
-            <section class="glass
+            <section class="glass-card">
+                <h3>👥 Kayıtlı Üyeler</h3>
+                <div class="user-table">
+                    <div class="t-header">
+                        <span>#</span><span>İsim</span><span>E-posta</span><span>Şifre</span><span style="text-align:right">İşlem</span>
+                    </div>
+                    <div id="userDataRows"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="editModalOverlay" class="modal-overlay">
+        <div class="edit-card">
+            <h3>✨ Bilgileri Güncelle</h3>
+            <input type="text" id="editName" placeholder="İsim">
+            <input type="email" id="editEmail" placeholder="E-posta">
+            <input type="text" id="editPassword" placeholder="Şifre">
+            <div class="modal-btns">
+                <button class="btn-save" onclick="updateUser()">KAYDET</button>
+                <button class="btn-close" onclick="closeModal()">İPTAL</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
