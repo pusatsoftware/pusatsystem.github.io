@@ -1,12 +1,10 @@
 let currentEditId = "";
 
 function startApp() {
-    // Üyeleri Firebase'den Çek ve Sayac ile Listele
     db.collection("users").orderBy("createdAt", "desc").onSnapshot(snapshot => {
         const rows = document.getElementById('userDataRows');
         rows.innerHTML = "";
-        
-        let sayac = 1; // NAN hatasını çözen kahraman sayac
+        let sayac = 1; 
 
         snapshot.forEach((doc) => {
             const u = doc.data();
@@ -26,7 +24,6 @@ function startApp() {
     });
 }
 
-// Düzenleme Modalını Aç
 function openEdit(id, n, e, p) {
     currentEditId = id;
     document.getElementById('editName').value = n;
@@ -35,34 +32,24 @@ function openEdit(id, n, e, p) {
     document.getElementById('editModalOverlay').style.display = 'flex';
 }
 
-// Modal Kapat
-function closeModal() { 
-    document.getElementById('editModalOverlay').style.display = 'none'; 
-}
+function closeModal() { document.getElementById('editModalOverlay').style.display = 'none'; }
 
-// Firebase Güncelleme
 function updateUser() {
     db.collection("users").doc(currentEditId).update({
         name: document.getElementById('editName').value,
         email: document.getElementById('editEmail').value,
         password: document.getElementById('editPassword').value
-    }).then(() => { 
-        closeModal(); 
-    });
+    }).then(() => { closeModal(); });
 }
 
-// Üye Silme
 function deleteUser(id) {
-    if(confirm("Bu üyeyi Pusat Systems veritabanından silmek istediğine emin misin?")) {
+    if(confirm("Silmek istediğine emin misin?")) {
         db.collection("users").doc(id).delete();
     }
 }
 
-// Logout İşlemi
 document.getElementById('logout').addEventListener('click', () => {
-    auth.signOut().then(() => {
-        window.location.href = "../index.html"; // Çıkış yapınca ana sayfaya atar
-    });
+    auth.signOut().then(() => { window.location.href = "../index.html"; });
 });
 
 startApp();
