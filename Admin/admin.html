@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Pusat Pro | Admin</title>
+    <title>Pusat Systems | Yönetim</title>
     <link rel="stylesheet" href="admin.css">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -12,9 +12,16 @@
 <body>
     <div class="admin-wrapper">
         <aside class="sidebar">
-            <h1 class="logo">PUSAT<span>PRO</span></h1>
-            <div class="nav-item active">📊 Dashboard</div>
-            <button id="logout" class="btn-exit">Çıkış</button>
+            <h1 class="logo-modern">Pusat<span>Systems</span></h1>
+            
+            <nav class="side-nav">
+                <div class="nav-item active">👥 Kullanıcılar</div>
+            </nav>
+
+            <button id="logout" class="btn-exit-ultra">
+                <span>ÇIKIŞ YAP</span>
+                <div class="exit-glow"></div>
+            </button>
         </aside>
 
         <main class="main-content">
@@ -33,9 +40,11 @@
     <div id="editModalOverlay" class="modal-overlay">
         <div class="edit-card">
             <h3>✨ Bilgileri Güncelle</h3>
-            <input type="text" id="editName" placeholder="İsim">
-            <input type="email" id="editEmail" placeholder="E-posta">
-            <input type="text" id="editPassword" placeholder="Şifre">
+            <div class="modal-inputs">
+                <input type="text" id="editName" placeholder="İsim">
+                <input type="email" id="editEmail" placeholder="E-posta">
+                <input type="text" id="editPassword" placeholder="Şifre">
+            </div>
             <div class="modal-btns">
                 <button class="btn-save-modern" onclick="updateUser()">KAYDET</button>
                 <button class="btn-cancel-modern" onclick="closeModal()">İPTAL</button>
