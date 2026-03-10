@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Pusat Systems | Admin</title>
+    <title>Pusat Systems | Admin Panel</title>
     <link rel="stylesheet" href="admin.css">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -56,12 +56,12 @@
 
     <div id="deleteModalOverlay" class="modal-overlay">
         <div class="alert-card danger-pattern">
-            <div class="icon-circle danger-icon">🗑️</div>
+            <div class="icon-circle danger-icon">⚠️</div>
             <h3>Emin misin?</h3>
             <p>Bu kullanıcıyı Pusat Systems'ten kalıcı olarak siliyorsun. Geri dönüşü yok!</p>
             <div class="modal-btns" style="width: 100%;">
                 <button class="btn-cancel-modern" onclick="closeDeleteModal()">İPTAL</button>
-                <button class="btn-save-modern" style="background: var(--danger); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);" onclick="confirmDelete()">EVET, SİL</button>
+                <button class="btn-save-modern" style="background: var(--danger);" onclick="confirmDelete()">EVET, SİL</button>
             </div>
         </div>
     </div>
@@ -71,6 +71,14 @@
             <div class="icon-circle success-icon">✅</div>
             <h3>İşlem Başarılı!</h3>
             <p>Kullanıcı bilgileri mermi gibi kaydedildi.</p>
+        </div>
+    </div>
+
+    <div id="deleteSuccessModalOverlay" class="modal-overlay">
+        <div class="alert-card danger-pattern">
+            <div class="icon-circle danger-icon">🗑️</div>
+            <h3>Kullanıcı Silindi!</h3>
+            <p>Hesap Pusat Systems veritabanından tamamen temizlendi.</p>
         </div>
     </div>
 
